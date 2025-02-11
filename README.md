@@ -1,2 +1,3 @@
-# be-my-valentine
-made a website to ask her to be my valentine
+# small website for her
+
+Built using **React** and deployed on **GitHub Pages.**
