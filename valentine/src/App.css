@@ -6,16 +6,19 @@ html, body {
 .wrapper {
   width: 100%;
   height: 100%;
-  background: #D8BFD8;
+  background: #89CFF0;
   overflow: hidden;
   text-align: center;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.x1 {
-  left: 5%;
+/* Ensure animations only apply to heart elements */
+.wrapper > .x1 {
+  left: 1%; /* Reduced from 5% */
+  top: 5%;
   -webkit-transform: scale(0.9);
   -moz-transform: scale(0.9);
   transform: scale(0.9);
@@ -25,8 +28,9 @@ html, body {
   animation: moveclouds 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
 }
 
-.x2 {
-  left: 25%;
+.wrapper > .x2 {
+  left: 21%; /* Reduced from 25% */
+  top: 15%;
   -webkit-transform: scale(0.6);
   -moz-transform: scale(0.6);
   transform: scale(0.6);
@@ -36,8 +40,9 @@ html, body {
   animation: moveclouds 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
 }
 
-.x3 {
-  left: 55%;
+.wrapper > .x3 {
+  left: 51%; /* Reduced from 55% */
+  top: 25%;
   -webkit-transform: scale(0.8);
   -moz-transform: scale(0.8);
   transform: scale(0.8);
@@ -47,8 +52,9 @@ html, body {
   animation: moveclouds 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
 }
 
-.x4 {
-  left: 72%;
+.wrapper > .x4 {
+  left: 68%; /* Reduced from 72% */
+  top: 35%;
   -webkit-transform: scale(0.75);
   -moz-transform: scale(0.75);
   transform: scale(0.75);
@@ -58,87 +64,96 @@ html, body {
   animation: moveclouds 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
 }
 
-.x5 {
-  left: 88%;
+.wrapper > .x5 {
+  left: 84%; /* Reduced from 88% */
+  top: 45%;
   -webkit-transform: scale(0.8);
   -moz-transform: scale(0.8);
   transform: scale(0.8);
-  opacity: 0.3; 
+  opacity: 0.3;
   -webkit-animation: moveclouds 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
   -moz-animation: moveclouds 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
   animation: moveclouds 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
 }
 
-.x6 {
-  left: 33%;
-  opacity: 1; 
+.wrapper > .x6 {
+  left: 9%; /* Reduced from 13% */
+  top: 55%;
+  opacity: 1;
   -webkit-animation: moveclouds 2s linear infinite, swayWays 1s ease-in-out infinite alternate;
   animation: moveclouds 10s linear infinite, swayWays 9s ease-in-out infinite alternate;
 }
 
-@-webkit-keyframes moveclouds { 
-  0% { 
-    top: 500px;
-  }
-  100% { 
-    top: -500px;
-  }
+.wrapper > .x7 {
+  left: 34%; /* Reduced from 38% */
+  top: 65%;
+  opacity: 0.7;
+  -webkit-animation: moveclouds 12s linear infinite, swayWays 7s ease-in-out infinite alternate;
+  animation: moveclouds 12s linear infinite, swayWays 7s ease-in-out infinite alternate;
 }
 
-@keyframes moveclouds {     
-  0% { 
-    top: 500px;
-  }
-  100% { 
-    top: -500px;
-  }
+.wrapper > .x8 {
+  left: 59%; /* Reduced from 63% */
+  top: 75%;
+  opacity: 0.5;
+  -webkit-animation: moveclouds 9s linear infinite, swayWays 5s ease-in-out infinite alternate;
+  animation: moveclouds 9s linear infinite, swayWays 5s ease-in-out infinite alternate;
 }
 
-@-webkit-keyframes sideWays { 
-  0% { 
-    margin-left:0px;
-  }
-  100% { 
-    margin-left:50px;
-  }
+.wrapper > .x9 {
+  left: 79%; /* Reduced from 83% */
+  top: 85%;
+  opacity: 0.9;
+  -webkit-animation: moveclouds 14s linear infinite, swayWays 3s ease-in-out infinite alternate;
+  animation: moveclouds 14s linear infinite, swayWays 3s ease-in-out infinite alternate;
 }
 
-@keyframes sideWays {
+@-webkit-keyframes moveclouds {
   0% {
-    margin-left:0px;
+    top: 500px;
   }
   100% {
-    margin-left:50px;
+    top: -500px;
   }
 }
+
+@keyframes moveclouds {
+  0% {
+    top: 500px;
+  }
+  100% {
+    top: -500px;
+  }
+}
+
 
 @-webkit-keyframes swayWays {
   0% {
     transform: rotate(12deg);
-    left:-0.3%;
+    left: -0.3%;
   }
-  33%{
+  33% {
     transform: rotate(-2deg);
     left: 0.7%;
   }
   100% {
     transform: rotate(0deg);
-    left:-12%;
+    left: -12%;
   }
 }
 
 @keyframes swayWays {
   0% {
     transform: rotate(12deg);
-    left:-0.3%;
+    left: -0.3%;
   }
-  33%{
+  33% {
     transform: rotate(-2deg);
     left: 0.7%;
   }
   100% {
     transform: rotate(0deg);
-    left:-12%;
+    left: -12%;
   }
 }
 
@@ -154,6 +169,7 @@ html, body {
 .heart {
   position: relative;
 }
+
 .heart:before,
 .heart:after {
   position: absolute;
@@ -172,6 +188,7 @@ html, body {
   -ms-transform-origin: 0 100%;
   transform-origin: 0 100%;
 }
+
 .heart:after {
   left: 0;
   -webkit-transform: rotate(45deg);
@@ -179,5 +196,5 @@ html, body {
   transform: rotate(45deg);
   -webkit-transform-origin: 100% 100%;
   -ms-transform-origin: 100% 100%;
-  transform-origin :100% 100%;
+  transform-origin: 100% 100%;
 }

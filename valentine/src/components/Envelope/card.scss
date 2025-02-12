@@ -1,0 +1,108 @@
+/*colors*/
+$background: #FEFCFE;
+$left-right-envelope : #5D598F;
+$top-inner-envelope: #7975A7;
+$bottom-envelope: #555283;
+$card : #D8D7E6;
+$font-color : #524E7F;
+$shadow-color : #E8E5EE;
+
+/*dimensions*/
+$envelope-width: 300px;
+$envelope-height: 200px;
+
+
+%center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin set-color-and-dimensions($color, $width, $height){
+  background-color: $color;
+  width: $width;
+  height: $height;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Satisfy', cursive;
+}
+
+
+
+.envelope{
+  position: relative;
+  @include set-color-and-dimensions($top-inner-envelope, $envelope-width, $envelope-height);
+  cursor: pointer;
+  z-index: 5;
+  .card{
+    position: relative;
+    top: 10px;
+    left: 10px;
+    @include set-color-and-dimensions($card, 
+      calc(#{$envelope-width - 20px}), calc(#{$envelope-height - 10px}));
+    @extend %center;
+    border-radius: 10px;
+    z-index: 1;
+    i{
+      position: absolute;
+      top: 10%;
+      right: 5%;
+      color: $font-color;
+      font-size: 15px;
+      border: none;
+      outline: none;
+    }
+    p{
+      font-size: 30px;
+      word-spacing: 5px;
+      color: $font-color;
+    }
+  }
+  .top{
+    position: absolute;
+    left: 0;
+    top: 0;
+    @include set-color-and-dimensions($top-inner-envelope, 100%, 65%);
+    z-index: 10;
+    clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+  }
+  .right{
+    position: absolute;
+    right: 0;
+    top: 0;
+    @include set-color-and-dimensions($left-right-envelope, 50%, 100%);
+    z-index: 5;
+    clip-path: polygon(100% 0%, 0% 51%, 100% 100%);
+  }
+  .bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    @include set-color-and-dimensions($bottom-envelope, 100%, 50%);
+    z-index: 5;
+    clip-path: polygon(0% 99%, 50% 0%, 100% 100%);
+  }
+  .left{
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include set-color-and-dimensions($left-right-envelope, 50%, 100%);
+    z-index: 5;
+    clip-path: polygon(0% 0%, 100% 50%, 0% 101%);
+  }
+  .shadow{
+    position: absolute;
+    bottom: -100px;
+    left: calc(#{($envelope-width/2) - #{($envelope-width/4)}});
+    width: calc(#{($envelope-width/2)});
+    height: 5px;
+    border-radius: 3px;
+    box-shadow: 10px 10px 7px $card;
+  }
+}
+
+
