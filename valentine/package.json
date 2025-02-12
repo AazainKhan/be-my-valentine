@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://aazainkhan.github.io/be-my-valentine/",
+
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -b main -d dist",
