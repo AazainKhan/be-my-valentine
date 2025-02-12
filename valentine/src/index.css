@@ -1,0 +1,14 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+:root {
+  color-scheme: light dark;
+  background-color: #D8BFD8;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
