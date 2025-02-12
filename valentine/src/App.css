@@ -1,13 +1,17 @@
 html, body {
   height: 100%;
+  margin: 0;
 }
 
 .wrapper {
   width: 100%;
+  height: 100%;
   background: #D8BFD8;
-  min-height: 100%;
   overflow: hidden;
   text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .x1 {
@@ -18,6 +22,7 @@ html, body {
   opacity: 0.6;
   -webkit-animation: moveclouds 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
   -moz-animation: moveclouds 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
+  animation: moveclouds 15s linear infinite, sideWays 4s ease-in-out infinite alternate;
 }
 
 .x2 {
@@ -28,6 +33,7 @@ html, body {
   opacity: 0.9;
   -webkit-animation: moveclouds 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
   -moz-animation: moveclouds 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
+  animation: moveclouds 25s linear infinite, sideWays 5s ease-in-out infinite alternate;
 }
 
 .x3 {
@@ -38,6 +44,7 @@ html, body {
   opacity: 0.8;
   -webkit-animation: moveclouds 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
   -moz-animation: moveclouds 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
+  animation: moveclouds 20s linear infinite, sideWays 4s ease-in-out infinite alternate;
 }
 
 .x4 {
@@ -47,7 +54,8 @@ html, body {
   transform: scale(0.75);
   opacity: 0.9;
   -webkit-animation: moveclouds 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
-  -moz-animation: moveclouds 18s linear infinite, sideWays 0zs ease-in-out infinite alternate;
+  -moz-animation: moveclouds 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
+  animation: moveclouds 18s linear infinite, sideWays 2s ease-in-out infinite alternate;
 }
 
 .x5 {
@@ -58,6 +66,7 @@ html, body {
   opacity: 0.3; 
   -webkit-animation: moveclouds 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
   -moz-animation: moveclouds 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
+  animation: moveclouds 7s linear infinite, sideWays 1s ease-in-out infinite alternate;
 }
 
 .x6 {
@@ -103,7 +112,22 @@ html, body {
   }
 }
 
-@-keyframes swayWays {
+@-webkit-keyframes swayWays {
+  0% {
+    transform: rotate(12deg);
+    left:-0.3%;
+  }
+  33%{
+    transform: rotate(-2deg);
+    left: 0.7%;
+  }
+  100% {
+    transform: rotate(0deg);
+    left:-12%;
+  }
+}
+
+@keyframes swayWays {
   0% {
     transform: rotate(12deg);
     left:-0.3%;
