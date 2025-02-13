@@ -422,7 +422,7 @@ function App() {
       {showYay && (
         <div className="gif-container">
           <img src={yayGif} alt="Yay!" className="yay-gif" />
-          <p className="yay-caption">YAY YOURE MINE!</p>
+          <p className="yay-caption">YAY YOU'RE MINE!</p>
         </div>
       )}
 
@@ -453,7 +453,7 @@ function App() {
       ) : null}
 
       {!showCanvas ? (
-        <div className="gift-container" ref={giftsRef} style={{ opacity: 0 }}>
+        <div className="gift-container" ref={giftsRef} style={{ opacity: 0, pointerEvents: showGiftsHeader ? 'auto' : 'none' }}>
           {showGiftsHeader && <h1 className="gift-header">These are for you :)</h1>}
           {giftStates.map((isOpen, index) => (
             <div className="gift" key={index} onClick={() => handleGiftClick(index)}>
