@@ -16,6 +16,8 @@ function App() {
   const [giftStates, setGiftStates] = useState(Array(6).fill(false));
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
+  const [showGiftsHeader, setShowGiftsHeader] = useState(false);
+  const [allGiftsClicked, setAllGiftsClicked] = useState(false);
 
   const cards = [
     "Hi Saamiya, It's almost Valentines Day!",
@@ -75,6 +77,7 @@ function App() {
           ease: "power2.inOut",
           onComplete: () => {
             gsap.to(giftsRef.current, { duration: 1, opacity: 1, ease: "power2.inOut" });
+            setShowGiftsHeader(true); // Set showGiftsHeader to true
           }
         });
       }
@@ -83,11 +86,21 @@ function App() {
 
   const handleGiftClick = (index) => {
     const transition = () => {
-      setSelectedImage(giftImages[index]);
-      setSelectedImageIndex(index);
       const newGiftStates = [...giftStates];
-      newGiftStates[index] = !newGiftStates[index];
-      setGiftStates(newGiftStates);
+      if (!giftStates[index]) { // Only set states if gift box is clicked
+        setSelectedImage(giftImages[index]);
+        setSelectedImageIndex(index);
+        newGiftStates[index] = true; // Ensure it opens only once
+        setGiftStates(newGiftStates);
+
+        // Check if all gifts have been clicked
+        if (newGiftStates.every(state => state)) {
+          setAllGiftsClicked(true);
+        }
+      } else {
+        setSelectedImage(giftImages[index]);
+        setSelectedImageIndex(index);
+      }
     };
 
     if (document.startViewTransition) {
@@ -142,6 +155,7 @@ function App() {
       </div>
 
       <div className="gift-container" ref={giftsRef} style={{ opacity: 0 }}>
+        {showGiftsHeader && <h1 className="gift-header">These are for you :)</h1>}
         {giftStates.map((isOpen, index) => (
           <div className="gift" key={index} onClick={() => handleGiftClick(index)}>
             {isOpen ? (
@@ -154,7 +168,11 @@ function App() {
             )}
           </div>
         ))}
-
+        {allGiftsClicked && (
+          <div className="reveal-button-container">
+            <button className="reveal-button">Click Me</button>
+          </div>
+        )}
       </div>
       {selectedImage && (
         <div
