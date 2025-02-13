@@ -18,6 +18,9 @@ function App() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
   const [showGiftsHeader, setShowGiftsHeader] = useState(false);
   const [allGiftsClicked, setAllGiftsClicked] = useState(false);
+  const [showCanvas, setShowCanvas] = useState(false);
+  const [showBlur, setShowBlur] = useState(false);
+  const [showQuestion, setShowQuestion] = useState(false);
 
   const cards = [
     "Hi Saamiya, It's almost Valentines Day!",
@@ -51,6 +54,209 @@ function App() {
 
     gsap.to(envelopeRef.current, { rotation: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
   }, []);
+
+  useEffect(() => {
+    if (showCanvas) {
+      const canv = document.getElementById("monCanvas");
+      const ctx = canv.getContext("2d");
+      const maxx = window.innerWidth - 16;
+      const maxy = window.innerHeight - 50;
+      let toggle = true;
+      let togglesync = true;
+
+      canv.width = maxx;
+      canv.height = maxy;
+      canv.style.backgroundColor = "transparent";
+
+      const clickCanvas = () => {
+        toggle = !toggle;
+        if (toggle && !togglesync) {
+          togglesync = true;
+          enchaine();
+        }
+      };
+
+      canv.addEventListener("click", clickCanvas);
+
+      const uneFleur = () => {
+        let xRacine, yRacine, hTige, xHaut, yHaut, xP1, yP1, xP2, yP2;
+
+        xRacine = Math.floor(maxx * Math.random());
+        yRacine = maxy - 1;
+        hTige = (0.4 + 0.3 * Math.random()) * maxy;
+        yHaut = yRacine - hTige;
+        let dech = (0.05 + 0.1 * Math.random()) * hTige;
+        if (Math.random() > 0.5) dech = -dech;
+        xHaut = xRacine + dech;
+        let thRacine = (5 + 10 * Math.random()) * Math.PI / 180;
+        let thHaut = (5 + 10 * Math.random()) * Math.PI / 180;
+        if (Math.random() > 0.5) {
+          thRacine = -thRacine;
+          thHaut = -thHaut;
+        }
+        let lRacine = (0.4 + 0.2 * Math.random()) * hTige;
+        let lHaut = (0.4 + 0.2 * Math.random()) * hTige;
+
+        let angleTige = Math.atan2(hTige, dech);
+        xP1 = xRacine + lRacine * Math.cos(angleTige + thRacine);
+        yP1 = yRacine - lRacine * Math.sin(angleTige + thRacine);
+
+        xP2 = xHaut - lHaut * Math.cos(angleTige + thHaut);
+        yP2 = yHaut + lRacine * Math.sin(angleTige + thHaut);
+
+        const pousseTige = () => {
+          const pousseTige1 = () => {
+            let t = kPas / nPas;
+            let unmt = 1 - t;
+            let xP4 = xRacine * unmt + xP1 * t;
+            let yP4 = yRacine * unmt + yP1 * t;
+            let xP5 = xP1 * unmt + xP2 * t;
+            let yP5 = yP1 * unmt + yP2 * t;
+            let xP6 = xP2 * unmt + xHaut * t;
+            let yP6 = yP2 * unmt + yHaut * t;
+
+            let xP7 = xP4 * unmt + xP5 * t;
+            let yP7 = yP4 * unmt + yP5 * t;
+            let xP8 = xP5 * unmt + xP6 * t;
+            let yP8 = yP5 * unmt + yP6 * t;
+
+            let xP = xP7 * unmt + xP8 * t;
+            let yP = yP7 * unmt + yP8 * t;
+
+            ctx.beginPath();
+            ctx.moveTo(xP, yP);
+
+            ++kPas;
+
+            t = kPas / nPas;
+            unmt = 1 - t;
+            xP4 = xRacine * unmt + xP1 * t;
+            yP4 = yRacine * unmt + yP1 * t;
+            xP5 = xP1 * unmt + xP2 * t;
+            yP5 = yP1 * unmt + yP2 * t;
+            xP6 = xP2 * unmt + xHaut * t;
+            yP6 = yP2 * unmt + yHaut * t;
+
+            xP7 = xP4 * unmt + xP5 * t;
+            yP7 = yP4 * unmt + yP5 * t;
+            xP8 = xP5 * unmt + xP6 * t;
+            yP8 = yP5 * unmt + yP6 * t;
+
+            xP = xP7 * unmt + xP8 * t;
+            yP = yP7 * unmt + yP8 * t;
+
+            ctx.lineTo(xP, yP);
+            ctx.stroke();
+
+            if (kPas >= nPas) {
+              pousseFleur();
+              return;
+            }
+            setTimeout(pousseTige1, 10);
+          };
+
+          let kPas = 0;
+          let nPas = Math.round(hTige / 5);
+
+          ctx.lineWidth = 1 + 5 * Math.random();
+          let hue = 80 + 80 * Math.random();
+          let sat = 80 + 20 * Math.random();
+          let lum = 30 + 40 * Math.random();
+          ctx.strokeStyle = `hsl(${hue},${sat}%,${lum}%)`;
+          pousseTige1();
+        };
+
+        const pousseFleur = () => {
+          const pousseFleur1 = () => {
+            for (let ncons = 0; ncons < 10; ncons++) {
+              let av = kPas / nPas;
+              let unmav = 1 - av;
+              let r = 1.5 + kPas * 0.5;
+              let npp = Math.round(2 * r / nPetales);
+
+              ctx.beginPath();
+              ctx.moveTo(xHaut, yHaut);
+              for (let kpet = 0; kpet < nPetales; kpet++) {
+                let thPet = thPetale + 2 * Math.PI / nPetales * kpet;
+
+                for (let kdp = 1; kdp <= npp; kdp++) {
+                  let thdp = kdp / npp * Math.PI;
+                  let rdp = r * Math.sin(thdp);
+                  let thp = thPet + 2 * Math.PI / nPetales * kdp / npp;
+                  ctx.lineTo(
+                    xHaut + rdp * Math.cos(thp),
+                    yHaut + rdp * Math.sin(thp)
+                  );
+                }
+              }
+
+              ctx.lineWidth = 1;
+              let hue = (h0 * unmav + h1 * av + 160) % 360;
+              let sat = s0 * unmav + s1 * av;
+              let lum = l0 * unmav + l1 * av;
+              ctx.strokeStyle = `hsl(${hue},${sat}%,${lum}%)`;
+              ctx.stroke();
+
+              if (++kPas > nPas) {
+                enchaine();
+                return;
+              }
+            }
+            setTimeout(pousseFleur1, 10);
+          };
+
+          let rayon = (0.1 + 0.3 * Math.random()) * maxy;
+
+          let nPetales = 4 + Math.floor(10 * Math.random());
+          let thPetale = Math.random() * Math.PI * 2;
+
+          let h1 = Math.random() * Math.PI / 2;
+          h1 = Math.sin(h1 * h1) * 280;
+          let h0 = h1;
+          while (true) {
+            h0 = Math.random() * 280;
+            if (Math.abs(h1 - h0) < 100) break;
+          }
+
+          let s0 = 90 + 10 * Math.random();
+          let s1 = 90 + 10 * Math.random();
+
+          let l0 = 40 + 20 * Math.random();
+          let l1 = 40 + 20 * Math.random();
+
+          let nPas = Math.round((rayon - 1.5) / 0.5);
+          let kPas = 0;
+
+          pousseFleur1();
+        };
+
+        pousseTige();
+      };
+
+      const enchaine = () => {
+        if (!toggle && togglesync) {
+          togglesync = false;
+          return;
+        }
+
+        uneFleur();
+      };
+
+      enchaine();
+
+      setTimeout(() => {
+        setShowBlur(true);
+        setShowQuestion(true);
+      }, 5000);
+
+      return () => {
+        canv.removeEventListener("click", clickCanvas);
+      };
+    }
+  }, [showCanvas]);
+
+  useEffect(() => {
+  }, [showQuestion]);
 
   const handleEnvelopeClick = () => {
     if (!isClicked) {
@@ -125,6 +331,18 @@ function App() {
     }
   };
 
+  const handleRevealClick = () => {
+    gsap.to([containerRef.current, giftsRef.current], {
+      duration: 1,
+      opacity: 0,
+      ease: "power2.inOut",
+      onComplete: () => {
+        setShowCanvas(true);
+      }
+    });
+  };
+
+
   return (
     <div className="wrapper">
       <div className="heart x1"></div>
@@ -134,46 +352,51 @@ function App() {
       <div className="heart x5"></div>
       <div className="heart x6"></div>
 
-      <div ref={containerRef}>
-        <div
-          className="envelope"
-          ref={envelopeRef}
-          onClick={handleEnvelopeClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={() => gsap.to(envelopeRef.current, { rotation: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' })}
-        >
-          <div className="card">
-            <div className="message">
-              <p>{cards[currentCardIndex]}</p>
+      {!showCanvas ? (
+        <div ref={containerRef}>
+          <div
+            className="envelope"
+            ref={envelopeRef}
+            onClick={handleEnvelopeClick}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={() => gsap.to(envelopeRef.current, { rotation: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' })}
+          >
+            <div className="card">
+              <div className="message">
+                <p>{cards[currentCardIndex]}</p>
+              </div>
             </div>
+            <div className="top"></div>
+            <div className="right"></div>
+            <div className="bottom"></div>
+            <div className="left"></div>
           </div>
-          <div className="top"></div>
-          <div className="right"></div>
-          <div className="bottom"></div>
-          <div className="left"></div>
         </div>
-      </div>
+      ) : null}
 
-      <div className="gift-container" ref={giftsRef} style={{ opacity: 0 }}>
-        {showGiftsHeader && <h1 className="gift-header">These are for you :)</h1>}
-        {giftStates.map((isOpen, index) => (
-          <div className="gift" key={index} onClick={() => handleGiftClick(index)}>
-            {isOpen ? (
-              <img src={giftImages[index]} alt="Gift" className="gift-image" />
-            ) : (
-              <>
-                <div className={`gift-top ${isOpen ? 'boxOpen' : ''}`}></div>
-                <div className={`gift-box ${isOpen ? 'boxDown' : ''}`}></div>
-              </>
-            )}
-          </div>
-        ))}
-        {allGiftsClicked && (
-          <div className="reveal-button-container">
-            <button className="reveal-button">Click Me</button>
-          </div>
-        )}
-      </div>
+      {!showCanvas ? (
+        <div className="gift-container" ref={giftsRef} style={{ opacity: 0 }}>
+          {showGiftsHeader && <h1 className="gift-header">These are for you :)</h1>}
+          {giftStates.map((isOpen, index) => (
+            <div className="gift" key={index} onClick={() => handleGiftClick(index)}>
+              {isOpen ? (
+                <img src={giftImages[index]} alt="Gift" className="gift-image" />
+              ) : (
+                <>
+                  <div className={`gift-top ${isOpen ? 'boxOpen' : ''}`}></div>
+                  <div className={`gift-box ${isOpen ? 'boxDown' : ''}`}></div>
+                </>
+              )}
+            </div>
+          ))}
+          {allGiftsClicked && (
+            <div className="reveal-button-container">
+              <button className="reveal-button" onClick={handleRevealClick}>Click Me</button>
+            </div>
+          )}
+        </div>
+      ) : null}
+
       {selectedImage && (
         <div
           className="lightbox-backdrop"
@@ -193,6 +416,18 @@ function App() {
           <p className="lightbox-caption">{captions[selectedImageIndex]}</p>
         </div>
       )}
+
+      <div className={`canvas-container ${showBlur ? 'blurred active' : ''}`}>
+        {showCanvas && <canvas id="monCanvas" className="canvas-layer"></canvas>}
+      </div>
+
+      <div className={`question-container ${showQuestion ? 'visible' : ''}`}>
+        <h1 className="valentine-question">Will you be my valentine?</h1>
+        <div className="button-container">
+          <button className="yes-button" onClick={() => alert('Yay!')}>Yes</button>
+          <button className="no-button"onClick={() => alert(':(')}>No</button>
+        </div>
+      </div>
     </div>
   );
 }
