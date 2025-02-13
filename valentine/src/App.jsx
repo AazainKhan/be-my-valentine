@@ -9,6 +9,9 @@ import cat3 from '/cat 3.jpg';
 import cat4 from '/cat 4.jpg';
 import cat5 from '/cat 5.jpg';
 import cat6 from '/cat 6.jpg';
+import yayGif from '/cat 7.gif'; // Add your GIF file here
+import yaySound from '/ifeelgood.mp3'; // Add your MP3 file here
+import FinalMessage from './components/FinalMessage';
 
 function App() {
   const envelopeRef = useRef(null);
@@ -17,7 +20,6 @@ function App() {
   const containerRef = useRef(null);
   const giftsRef = useRef(null);
   const noButtonRef = useRef(null);
-
 
   const [isClicked, setIsClicked] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -29,6 +31,20 @@ function App() {
   const [showCanvas, setShowCanvas] = useState(false);
   const [showBlur, setShowBlur] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
+  const [fleeingActive, setFleeingActive] = useState(false); // New state
+  const [showGif, setShowGif] = useState(false); // New state for GIF
+  const [yesButtonSize, setYesButtonSize] = useState(1.5);
+  const [noButtonText, setNoButtonText] = useState("No");
+  const [noClickCount, setNoClickCount] = useState(0);
+  const [showYay, setShowYay] = useState(false);
+  const [showFinalMessage, setShowFinalMessage] = useState(false);
+
+  const noButtonMessages = [
+    "are you sure?",
+    "you're breaking my heart",
+    "nah uh",
+    "I'm gonna cry"
+  ];
 
   const cards = [
     "Hi Saamiya, It's almost Valentines Day!",
@@ -38,12 +54,18 @@ function App() {
     "But first..."
   ];
 
-
-  const giftImages = [cat1, cat2, cat3, cat4, cat5, cat6];
+  const giftImages = [
+    '/cat 1.jpg',
+    '/cat 2.jpg',
+    '/cat 3.jpg',
+    '/cat 4.jpg',
+    '/cat 5.jpg',
+    '/cat 6.jpg'
+  ];
 
   // Fleeing effect for the No button
   const handleNoButtonMouseMove = () => {
-    if (noButtonRef.current) {
+    if (fleeingActive && window.innerWidth >= 768 && noButtonRef.current) { // Check if fleeing is active and screen width is >= 768px
       const randomOffsetTop = Math.floor(Math.random() * 200) - 100; // Adjust range as needed
       const randomOffsetLeft = Math.floor(Math.random() * 200) - 100;
 
@@ -51,6 +73,34 @@ function App() {
       noButtonRef.current.style.top = `${randomOffsetTop}px`;
       noButtonRef.current.style.left = `${randomOffsetLeft}px`;
     }
+  };
+
+  const handleYesButtonClick = () => {
+    setShowGif(true);
+    const audio = new Audio(yaySound);
+    audio.play();
+    setShowYay(true);
+
+    // After 15 seconds, hide the GIF and show the final message
+    setTimeout(() => {
+      gsap.to('.gif-container', {
+        duration: 1,
+        opacity: 0,
+        onComplete: () => {
+          audio.pause();
+          setShowGif(false);
+          setShowYay(false);
+          setShowFinalMessage(true);
+        }
+      });
+    }, 8000);
+  };
+
+  const handleNoButtonClick = () => {
+    setYesButtonSize(prevSize => prevSize + 1);
+    const messageIndex = noClickCount % noButtonMessages.length;
+    setNoButtonText(noButtonMessages[messageIndex]);
+    setNoClickCount(prevCount => prevCount + 1);
   };
 
   useEffect(() => {
@@ -261,6 +311,7 @@ function App() {
       setTimeout(() => {
         setShowBlur(true);
         setShowQuestion(true);
+        setFleeingActive(window.innerWidth >= 768); // Activate fleeing effect only on larger screens
       }, 5000);
 
       return () => {
@@ -366,6 +417,17 @@ function App() {
       <div className="heart x5"></div>
       <div className="heart x6"></div>
 
+      {showYay && (
+        <div className="gif-container">
+          <img src={yayGif} alt="Yay!" className="yay-gif" />
+          <p className="yay-caption">YAY YOURE MINE!</p>
+        </div>
+      )}
+
+      {showFinalMessage && (
+        <FinalMessage />
+      )}
+
       {!showCanvas ? (
         <div ref={containerRef}>
           <div
@@ -436,9 +498,17 @@ function App() {
       </div>
 
       <div className={`question-container ${showQuestion ? 'visible' : ''}`}>
-        <h1 className="valentine-question">Will you be my valentine?</h1>
+        <h1 className="valentine-question">Will you be my valentine? 🥺</h1>
+        <p>(there is only 1 right answer hehehehhe)</p>
         <div className="button-container">
-          <button className="yes-button" onClick={() => alert('Yay!')}>Yes</button>
+          <button
+            className="yes-button"
+            onClick={handleYesButtonClick}
+            disabled={!showQuestion}
+            style={{ fontSize: `${yesButtonSize}em` }}
+          >
+            Yes
+          </button>
           <button
             className="no-button"
             ref={noButtonRef}
@@ -448,9 +518,9 @@ function App() {
                 noButtonRef.current.style.transform = 'translate(0, 0)';
               }
             }}
-            onClick={() => alert(':(')}
+            onClick={handleNoButtonClick}
           >
-            No
+            {noButtonText}
           </button>
         </div>
       </div>
