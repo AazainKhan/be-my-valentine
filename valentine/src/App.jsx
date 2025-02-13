@@ -3,6 +3,12 @@ import './App.css';
 import './components/Envelope/card.scss';
 import gsap from 'gsap';
 import captions from './captions.json';
+import cat1 from '/cat 1.jpg';
+import cat2 from '/cat 2.jpg';
+import cat3 from '/cat 3.jpg';
+import cat4 from '/cat 4.jpg';
+import cat5 from '/cat 5.jpg';
+import cat6 from '/cat 6.jpg';
 
 function App() {
   const envelopeRef = useRef(null);
@@ -10,7 +16,6 @@ function App() {
   const t2Ref = useRef(null);
   const containerRef = useRef(null);
   const giftsRef = useRef(null);
-  const noButtonRef = useRef(null);
 
   const [isClicked, setIsClicked] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -31,26 +36,9 @@ function App() {
     "But first..."
   ];
 
-  const giftImages = [
-    '/cat 1.jpg',
-    '/cat 2.jpg',
-    '/cat 3.jpg',
-    '/cat 4.jpg',
-    '/cat 5.jpg',
-    '/cat 6.jpg'
-  ];
 
-    // Fleeing effect for the No button
-    const handleNoButtonMouseMove = () => {
-      if (noButtonRef.current) {
-        const randomOffsetTop = Math.floor(Math.random() * 200) - 100; // Adjust range as needed
-        const randomOffsetLeft = Math.floor(Math.random() * 200) - 100;
-        
-        noButtonRef.current.style.position = "relative";
-        noButtonRef.current.style.top = `${randomOffsetTop}px`;
-        noButtonRef.current.style.left = `${randomOffsetLeft}px`;
-      }
-    };
+  
+  const giftImages = [cat1, cat2, cat3, cat4, cat5, cat6];
 
   useEffect(() => {
     t1Ref.current = gsap.timeline({ paused: true });
@@ -438,14 +426,7 @@ function App() {
         <h1 className="valentine-question">Will you be my valentine?</h1>
         <div className="button-container">
           <button className="yes-button" onClick={() => alert('Yay!')}>Yes</button>
-          <button 
-            className="no-button" 
-            ref={noButtonRef} 
-            onMouseMove={handleNoButtonMouseMove}
-            onClick={() => alert(':(')}
-          >
-            No
-          </button>
+          <button className="no-button"onClick={() => alert(':(')}>No</button>
         </div>
       </div>
     </div>
