@@ -10,7 +10,7 @@ import cat4 from '/cat 4.jpg';
 import cat5 from '/cat 5.jpg';
 import cat6 from '/cat 6.jpg';
 import yayGif from '/cat 7.gif'; // Add your GIF file here
-import yaySound from '/ifeelgood.mp3'; // Add your MP3 file here
+// import yaySound from '/ifeelgood.mp3'; // Add your MP3 file here
 import FinalMessage from './components/FinalMessage';
 
 function App() {
@@ -54,13 +54,7 @@ function App() {
     "But first..."
   ];
 
-  const giftImages = [
-    '/cat 1.jpg',
-    '/cat 2.jpg',
-    '/cat 3.jpg',
-    '/cat 4.jpg',
-    '/cat 5.jpg',
-    '/cat 6.jpg'
+  const giftImages = [ cat1, cat2, cat3, cat4, cat5, cat6
   ];
 
   // Fleeing effect for the No button
@@ -77,23 +71,31 @@ function App() {
 
   const handleYesButtonClick = () => {
     setShowGif(true);
-    const audio = new Audio(yaySound);
-    audio.play();
+    // const audio = new Audio(yaySound);
+    // audio.play();
     setShowYay(true);
 
-    // After 15 seconds, hide the GIF and show the final message
+    // After 8 seconds, hide the GIF and show the final message
     setTimeout(() => {
       gsap.to('.gif-container', {
         duration: 1,
         opacity: 0,
         onComplete: () => {
-          audio.pause();
+          // audio.pause();
           setShowGif(false);
           setShowYay(false);
           setShowFinalMessage(true);
+          console.log("setShowGif(false) called");
+          console.log("setShowYay(false) called");
+          console.log("setShowFinalMessage(true) called");
         }
       });
+      console.log("Fading out GIF...");
     }, 8000);
+
+    console.log("Yes button clicked!");
+    console.log("setShowGif(true) called");
+    console.log("setShowYay(true) called");
   };
 
   const handleNoButtonClick = () => {

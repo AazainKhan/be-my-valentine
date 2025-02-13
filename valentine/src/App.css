@@ -501,6 +501,7 @@ h1 {
 }
 
 .yay-caption {
+  font-family: 'Roboto', sans-serif;
   font-size: 2em;
   color: white;
   margin-top: 10px;
@@ -544,6 +545,6 @@ h1 {
 /* Adjust font size for mobile devices */
 @media (max-width: 768px) {
   .paper-content {
-    font-size: 1.5em;
+    font-size: 1.2em;
   }
 }
