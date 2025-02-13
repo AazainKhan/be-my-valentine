@@ -439,7 +439,7 @@ function App() {
         <div className="button-container">
           <button className="yes-button" onClick={() => alert('Yay!')}>Yes</button>
           <button 
-            className="no-button fleeing" 
+            className="no-button" 
             ref={noButtonRef} 
             onMouseMove={handleNoButtonMouseMove}
             onClick={() => alert(':(')}
