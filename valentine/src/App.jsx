@@ -83,13 +83,8 @@ function App() {
 
   const handleGiftClick = (index) => {
     const transition = () => {
-      if (giftStates[index]) {
-        setSelectedImage(null);
-        setSelectedImageIndex(-1);
-      } else {
-        setSelectedImage(giftImages[index]);
-        setSelectedImageIndex(index);
-      }
+      setSelectedImage(giftImages[index]);
+      setSelectedImageIndex(index);
       const newGiftStates = [...giftStates];
       newGiftStates[index] = !newGiftStates[index];
       setGiftStates(newGiftStates);
@@ -100,34 +95,6 @@ function App() {
     } else {
       transition();
     }
-  };
-
-  const Lightbox = ({ src, onClose, caption }) => {
-    const boxRef = useRef(null);
-
-    useEffect(() => {
-      if (src && document.startViewTransition) {
-        boxRef.current.style.viewTransitionName = 'active-lightbox-image';
-      }
-      return () => {
-        if (document.startViewTransition) {
-          boxRef.current?.style.removeProperty('view-transition-name');
-        }
-      };
-    }, [src]);
-
-    return src ? (
-      <div className="lightbox-backdrop" onClick={onClose}>
-        <img
-          ref={boxRef}
-          src={src}
-          alt="Gift"
-          className="lightbox-image"
-          style={{ viewTransitionName: 'active-lightbox-image' }}
-        />
-        <p className="lightbox-caption">{caption}</p>
-      </div>
-    ) : null;
   };
 
   const handleMouseEnter = () => {
@@ -177,17 +144,37 @@ function App() {
       <div className="gift-container" ref={giftsRef} style={{ opacity: 0 }}>
         {giftStates.map((isOpen, index) => (
           <div className="gift" key={index} onClick={() => handleGiftClick(index)}>
-            <div className={`gift-top ${isOpen ? 'boxOpen' : ''}`}></div>
-            <div className={`gift-box ${isOpen ? 'boxDown' : ''}`}></div>
+            {isOpen ? (
+              <img src={giftImages[index]} alt="Gift" className="gift-image" />
+            ) : (
+              <>
+                <div className={`gift-top ${isOpen ? 'boxOpen' : ''}`}></div>
+                <div className={`gift-box ${isOpen ? 'boxDown' : ''}`}></div>
+              </>
+            )}
           </div>
         ))}
 
       </div>
-      <Lightbox
-          src={selectedImage}
-          onClose={() => handleGiftClick(selectedImageIndex)}
-          caption={captions[selectedImageIndex]}
-        />
+      {selectedImage && (
+        <div
+          className="lightbox-backdrop"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setSelectedImage(null);
+              setSelectedImageIndex(-1);
+            }
+          }}
+        >
+          <img
+            src={selectedImage}
+            alt="Gift"
+            className="lightbox-image"
+            style={{ viewTransitionName: 'active-lightbox-image' }}
+          />
+          <p className="lightbox-caption">{captions[selectedImageIndex]}</p>
+        </div>
+      )}
     </div>
   );
 }
