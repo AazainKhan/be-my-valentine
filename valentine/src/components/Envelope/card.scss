@@ -1,5 +1,3 @@
-@use 'sass:math';
-
 /*colors*/
 $background: #FEFCFE;
 $left-right-envelope : #5D598F;
@@ -30,7 +28,6 @@ $envelope-height: 200px;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Satisfy', cursive;
 }
 
 
@@ -43,11 +40,13 @@ $envelope-height: 200px;
   .card{
     position: relative;
     top: 10px;
+    font-family: 'Satisfy', cursive;
     left: 10px;
     @include set-color-and-dimensions($card, 
       calc(#{$envelope-width - 20px}), calc(#{$envelope-height - 10px}));
     @extend %center;
     border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     z-index: 1;
     i{
       position: absolute;
@@ -59,7 +58,7 @@ $envelope-height: 200px;
       outline: none;
     }
     p{
-      font-size: 30px;
+      font-size: 20px;
       word-spacing: 5px;
       color: $font-color;
     }
@@ -99,8 +98,8 @@ $envelope-height: 200px;
   .shadow{
     position: absolute;
     bottom: -100px;
-    left: calc(#{math.div($envelope-width, 2) - math.div($envelope-width, 4)});
-    width: calc(#{math.div($envelope-width, 2)});
+    left: calc(#{($envelope-width/2) - #{($envelope-width/4)}});
+    width: calc(#{($envelope-width/2)});
     height: 5px;
     border-radius: 3px;
     box-shadow: 10px 10px 7px $card;

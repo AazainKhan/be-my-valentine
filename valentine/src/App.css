@@ -1,15 +1,16 @@
 html, body {
   height: 100%;
   margin: 0;
+  overflow: hidden; /* Prevent scrolling */
 }
 
 .wrapper {
   width: 100%;
   height: 100%;
   background: #89CFF0;
+  background: #89CFF0;
   overflow: hidden;
   text-align: center;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,4 +198,207 @@ html, body {
   -webkit-transform-origin: 100% 100%;
   -ms-transform-origin: 100% 100%;
   transform-origin: 100% 100%;
+}
+/* Gift Container */
+.gift-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
+  grid-gap: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  justify-items: center; /* Centers items horizontally in grid cells */
+  align-items: center; /* Centers items vertically in grid cells */
+  margin: 0 auto;
+  z-index: 1; /* Ensure it's behind the lightbox */
+
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for mobile */
+    width: 90%;
+    max-width: 390px;
+    grid-gap: 15px;
+  }
+}
+
+/* Gift Box */
+.gift {
+  position: relative;
+  width: 180px;  /* Increased width */
+  height: 180px; /* Increased height */
+  min-width: 100px; /* Prevents shrinking */
+  min-height: 100px; /* Prevents shrinking */
+  transform-origin: 0% 0%;
+  cursor: pointer;
+  transition: 1s;
+
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    width: 120px; /* Increased width */
+    height: 120px; /* Increased height */
+    min-width: 80px;
+    min-height: 80px;
+  }
+}
+
+/* Gift Top (Lid) */
+.gift-top {
+  position: relative;
+  width: 110%;
+  height: 25%;
+  background: #F54537;
+  border-radius: 5px 5px 0 0;
+  transform: translate3d(-5%, 0, 0);
+  background-image: linear-gradient(to right, #F54537 0%, #F54537 44%, #FFC113 44%, #FFC113 56%, #F54537 56%, #F54537 100%);
+  transition: 1s;
+}
+
+/* Gift Top Open Animation */
+.gift-top.boxOpen {
+  animation: box-open 1s;
+  opacity: 0;
+}
+
+@keyframes box-open {
+  0% {
+    top: 0px;
+    opacity: 1;
+  }
+  100% {
+    top: -50px;
+    opacity: 0;
+  }
+}
+
+/* Gift Top Ribbon Bows */
+.gift-top::before,
+.gift-top::after {
+  content: "";
+  width: 15px;
+  height: 15px;
+  border: 10px solid #FFC113;
+  border-radius: 50% 50% 0 50%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate3d(-100%, -100%, 0) skew(10deg, 10deg);
+}
+
+.gift-top::after {
+  border-radius: 50% 50% 50% 0;
+  transform: translate3d(0, -100%, 0) skew(-10deg, -10deg);
+}
+
+/* Gift Box (Bottom) */
+.gift-box {
+  width: 100%;
+  height: 75%;
+  position: relative;
+  background-image: linear-gradient(to right, #D43130 0%, #D43130 45%, #FF900A 45%, #FF900A 55%, #D43130 55%, #D43130 100%);
+  border-radius: 0 0 5px 5px;
+  transition: 1s;
+}
+
+/* Gift Box Open Animation */
+.gift-box.boxDown {
+  animation: box-down 1s;
+  opacity: 0;
+}
+
+@keyframes box-down {
+  0% {
+    top: 0px;
+    opacity: 1;
+  }
+  100% {
+    top: 50px;
+    opacity: 0;
+  }
+}
+
+/* Lightbox styles */
+.lightbox-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: zoom-out;
+  z-index: 1;
+}
+
+.lightbox-image {
+  max-width: 90%; /* Increased size */
+  max-height: 90vh; /* Increased size */
+  border-radius: 1rem;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+  margin-bottom: 10px; /* Space between image and caption */
+  background-color: white; /* Add a white background to the image */
+  padding: 10px; /* Add some padding around the image */
+  z-index: 2;
+}
+
+.lightbox-caption { /* Corrected CSS rule name */
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px; /* Increased font size */
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5); /* Optional: add background to caption for better readability */
+  border-radius: 5px;
+}
+
+.gift-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* View transition animations */
+::view-transition-group(active-lightbox-image) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-button-container {
+  grid-column: 1 / -1; /* Span all columns */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Add some space above the button */
+}
+
+.reveal-button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.gift-header {
+  grid-column: 1 / -1; /* Span all columns */
+  text-align: center;
+  font-size: 3em;
+  font-family: 'Satisfy', cursive;
+  color: #524E7F;
+  margin-bottom: 20px;
+}
+
+h1 {
+  color: #e91e63;
+  margin-bottom: 20px;
+
 }
