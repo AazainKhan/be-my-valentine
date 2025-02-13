@@ -26,12 +26,12 @@ function App() {
   ];
 
   const giftImages = [
-    '../public/cat 1.jpg',
-    '../public/cat 2.jpg',
-    '../public/cat 3.jpg',
-    '../public/cat 4.jpg',
-    '../public/cat 5.jpg',
-    '../public/cat 6.jpg'
+    '/cat 1.jpg',
+    '/cat 2.jpg',
+    '/cat 3.jpg',
+    '/cat 4.jpg',
+    '/cat 5.jpg',
+    '/cat 6.jpg'
   ];
 
   useEffect(() => {

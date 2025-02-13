@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /*colors*/
 $background: #FEFCFE;
 $left-right-envelope : #5D598F;
@@ -10,7 +12,6 @@ $shadow-color : #E8E5EE;
 /*dimensions*/
 $envelope-width: 300px;
 $envelope-height: 200px;
-
 
 %center{
   display: flex;
@@ -29,8 +30,6 @@ $envelope-height: 200px;
   margin: 0;
   box-sizing: border-box;
 }
-
-
 
 .envelope{
   position: relative;
@@ -98,8 +97,8 @@ $envelope-height: 200px;
   .shadow{
     position: absolute;
     bottom: -100px;
-    left: calc(#{($envelope-width/2) - #{($envelope-width/4)}});
-    width: calc(#{($envelope-width/2)});
+    left: calc(#{math.div($envelope-width, 2)} - #{math.div($envelope-width, 4)});
+    width: calc(#{math.div($envelope-width, 2)});
     height: 5px;
     border-radius: 3px;
     box-shadow: 10px 10px 7px $card;
