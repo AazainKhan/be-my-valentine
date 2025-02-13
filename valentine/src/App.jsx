@@ -16,6 +16,8 @@ function App() {
   const t2Ref = useRef(null);
   const containerRef = useRef(null);
   const giftsRef = useRef(null);
+  const noButtonRef = useRef(null);
+
 
   const [isClicked, setIsClicked] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -37,8 +39,19 @@ function App() {
   ];
 
 
-  
   const giftImages = [cat1, cat2, cat3, cat4, cat5, cat6];
+
+  // Fleeing effect for the No button
+  const handleNoButtonMouseMove = () => {
+    if (noButtonRef.current) {
+      const randomOffsetTop = Math.floor(Math.random() * 200) - 100; // Adjust range as needed
+      const randomOffsetLeft = Math.floor(Math.random() * 200) - 100;
+      
+      noButtonRef.current.style.position = "relative";
+      noButtonRef.current.style.top = `${randomOffsetTop}px`;
+      noButtonRef.current.style.left = `${randomOffsetLeft}px`;
+    }
+  };
 
   useEffect(() => {
     t1Ref.current = gsap.timeline({ paused: true });
@@ -426,7 +439,14 @@ function App() {
         <h1 className="valentine-question">Will you be my valentine?</h1>
         <div className="button-container">
           <button className="yes-button" onClick={() => alert('Yay!')}>Yes</button>
-          <button className="no-button"onClick={() => alert(':(')}>No</button>
+          <button
+            className="no-button"
+            ref={noButtonRef}
+            onMouseMove={handleNoButtonMouseMove}
+            onClick={() => alert(':(')}
+          >
+            No
+          </button>
         </div>
       </div>
     </div>
