@@ -46,7 +46,7 @@ function App() {
     if (noButtonRef.current) {
       const randomOffsetTop = Math.floor(Math.random() * 200) - 100; // Adjust range as needed
       const randomOffsetLeft = Math.floor(Math.random() * 200) - 100;
-      
+
       noButtonRef.current.style.position = "relative";
       noButtonRef.current.style.top = `${randomOffsetTop}px`;
       noButtonRef.current.style.left = `${randomOffsetLeft}px`;
@@ -443,6 +443,11 @@ function App() {
             className="no-button"
             ref={noButtonRef}
             onMouseMove={handleNoButtonMouseMove}
+            onMouseLeave={() => {
+              if (noButtonRef.current) {
+                noButtonRef.current.style.transform = 'translate(0, 0)';
+              }
+            }}
             onClick={() => alert(':(')}
           >
             No

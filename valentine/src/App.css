@@ -437,10 +437,21 @@ h1 {
   margin-bottom: 20px;
 }
 
+/* Add this to your CSS */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: nowrap; /* Prevent wrapping to new line */
+}
+
+
+
+
 .button-container button {
   padding: 15px 30px; /* Increase padding */
   font-size: 1.5em; /* Increase font size */
-  margin: 0 20px; /* Increase gap between buttons */
   cursor: pointer;
   border-radius: 5px;
 }
@@ -455,6 +466,8 @@ h1 {
   background-color: #f44336;
   color: white;
   border: none;
+  position: static; /* Reset positioning */
+  margin: 0; /* Remove default margins */
 }
 
 
